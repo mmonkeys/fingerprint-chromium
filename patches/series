@@ -106,3 +106,11 @@ extra/ungoogled-chromium/add-flag-to-reduce-system-info.patch
 extra/ungoogled-chromium/add-flag-to-remove-client-hints.patch
 extra/ungoogled-chromium/disable-downloads-page-referrer-url.patch
 extra/ungoogled-chromium/enable-extra-locales.patch
+
+extra/fingerprint/001-disable-runtime.enable.patch
+extra/fingerprint/002-user-agent-data-fingerprint.patch
+extra/fingerprint/003-audio-fingerprint.patch
+extra/fingerprint/004-plugin-fingerprint.patch
+extra/fingerprint/005-hardware-concurrency-fingerprint.patch
+extra/fingerprint/006-font-fingerprint.patch
+extra/fingerprint/007-shadow-root.patch

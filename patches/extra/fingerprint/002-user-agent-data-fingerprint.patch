@@ -1,0 +1,338 @@
+diff --git a/content/browser/client_hints/client_hints.cc b/content/browser/client_hints/client_hints.cc
+index 46a2be9065..8f0283ac9c 100644
+--- a/content/browser/client_hints/client_hints.cc
++++ b/content/browser/client_hints/client_hints.cc
+@@ -727,6 +727,51 @@ void UpdateNavigationRequestClientUaHeadersImpl(
+     if (!ua_metadata.has_value())
+       ua_metadata = delegate->GetUserAgentMetadata();
+ 
++    std::string full_version = ua_metadata->full_version;
++    std::string main_version = full_version.substr(0, full_version.find('.'));
++    ua_metadata->brand_version_list.push_back(
++        {"Google Chrome", main_version}  // 插入主版本号
++    );
++    ua_metadata->brand_full_version_list.push_back(
++        {"Google Chrome", ua_metadata->full_version}
++    );
++
++    const base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
++    if (command_line->HasSwitch(switches::kFingerprintPlatform)) {
++        std::string platform_value = command_line->GetSwitchValueASCII(switches::kFingerprintPlatform);
++
++        // 在这里声明变量
++        std::string platform;
++        std::string platform_version;
++
++        // 设置平台名称
++        if (platform_value == "windows") {
++            platform = "Windows";
++            platform_version = "15.0.0";  // Windows默认版本
++        } else if (platform_value == "linux") {
++            platform = "Linux";
++            platform_version = "6.8.0";   // Linux默认版本
++        } else if (platform_value == "macos") {
++            platform = "macOS";
++            platform_version = "10.15.7"; // macOS默认版本
++        }
++
++        // 检查是否有自定义版本号
++        if (command_line->HasSwitch(switches::kFingerprintPlatformVersion)) {
++            std::string version_value = command_line->GetSwitchValueASCII(switches::kFingerprintPlatformVersion);
++            if (!version_value.empty()) {
++                platform_version = version_value;
++            }
++        }
++
++        // 设置平台和版本信息
++        ua_metadata->platform = platform;
++        ua_metadata->platform_version = platform_version;
++        if (platform_value == "macos") {
++          ua_metadata->architecture = "arm";
++        }
++    }
++
+     // The `Sec-CH-UA` client hint is attached to all outgoing requests. This is
+     // (intentionally) different than other client hints.
+     // It's barred behind ShouldAddClientHints to make sure it's controlled by
+diff --git a/content/browser/renderer_host/render_process_host_impl.cc b/content/browser/renderer_host/render_process_host_impl.cc
+index 5ee0b444de..356619d35b 100644
+--- a/content/browser/renderer_host/render_process_host_impl.cc
++++ b/content/browser/renderer_host/render_process_host_impl.cc
+@@ -3317,6 +3317,9 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
+     switches::kEnableWebGLImageChromium,
+     switches::kEnableWebGPUDeveloperFeatures,
+     switches::kFileUrlPathAlias,
++    switches::kFingerprint,
++    switches::kFingerprintPlatform,
++    switches::kFingerprintPlatformVersion,
+     switches::kFingerprintingClientRectsNoise,
+     switches::kFingerprintingCanvasMeasureTextNoise,
+     switches::kFingerprintingCanvasImageDataNoise,
+diff --git a/content/common/user_agent.cc b/content/common/user_agent.cc
+index 070658460e..3bd46787d7 100644
+--- a/content/common/user_agent.cc
++++ b/content/common/user_agent.cc
+@@ -5,7 +5,11 @@
+ #include "content/public/common/user_agent.h"
+ 
+ #include <stdint.h>
++#include <algorithm>
++#include <cctype>
++#include <string>
+ 
++#include "base/command_line.h"
+ #include "base/containers/contains.h"
+ #include "base/logging.h"
+ #include "base/strings/strcat.h"
+@@ -15,6 +19,8 @@
+ #include "build/build_config.h"
+ #include "build/util/chromium_git_revision.h"
+ 
++#include "content/public/common/content_switches.h"
++
+ #if BUILDFLAG(IS_MAC)
+ #include "base/mac/mac_util.h"
+ #endif
+@@ -41,6 +47,21 @@ const char kFrozenUserAgentTemplate[] =
+     "Safari/537.36";
+ 
+ std::string GetUserAgentPlatform() {
++const base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
++if (command_line->HasSwitch(switches::kFingerprintPlatform)) {
++  std::string platform_value = base::ToLowerASCII(command_line->GetSwitchValueASCII(switches::kFingerprintPlatform));
++
++  // 判断自定义平台
++  if (platform_value == "windows") {
++    return "";
++  } else if (platform_value == "linux") {
++    return "X11; ";
++  } else if (platform_value == "macos") {
++    return "Macintosh; ";
++  }
++}
++
++
+ #if BUILDFLAG(IS_WIN)
+   return "";
+ #elif BUILDFLAG(IS_MAC)
+@@ -61,6 +82,20 @@ std::string GetUserAgentPlatform() {
+ }
+ 
+ std::string GetUnifiedPlatform() {
++const base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
++if (command_line->HasSwitch(switches::kFingerprintPlatform)) {
++  std::string platform_value = base::ToLowerASCII(command_line->GetSwitchValueASCII(switches::kFingerprintPlatform));
++
++  if (platform_value == "windows") {
++    return "Windows NT 10.0; Win64; x64";
++  } else if (platform_value == "linux") {
++    return "X11; Linux x86_64";
++  } else if (platform_value == "macos") {
++    return "Macintosh; Intel Mac OS X 10_15_7";
++  }
++}
++
++
+ #if BUILDFLAG(IS_ANDROID)
+   return "Linux; Android 10; K";
+ #elif BUILDFLAG(IS_CHROMEOS)
+diff --git a/content/public/common/content_switches.cc b/content/public/common/content_switches.cc
+index f842ab8b3b..a5f2fce54b 100644
+--- a/content/public/common/content_switches.cc
++++ b/content/public/common/content_switches.cc
+@@ -444,6 +444,10 @@ const char kEnableWebGLImageChromium[] = "enable-webgl-image-chromium";
+ // file:///alias/some/path.html into file:///replacement/some/path.html.
+ const char kFileUrlPathAlias[] = "file-url-path-alias";
+ 
++const char kFingerprint[] = "fingerprint";
++const char kFingerprintPlatform[] = "fingerprint-platform";
++const char kFingerprintPlatformVersion[] = "fingerprint-platform-version";
++
+ // This forces pages to be loaded as presentation receivers.  Useful for testing
+ // behavior specific to presentation receivers.
+ // Spec: https://www.w3.org/TR/presentation-api/#interface-presentationreceiver
+diff --git a/content/public/common/content_switches.h b/content/public/common/content_switches.h
+index 922ba0f203..206bd9ff13 100644
+--- a/content/public/common/content_switches.h
++++ b/content/public/common/content_switches.h
+@@ -133,6 +133,9 @@ CONTENT_EXPORT extern const char kEnableWebRtcSrtpEncryptedHeaders[];
+ CONTENT_EXPORT extern const char kEnforceWebRtcIPPermissionCheck[];
+ CONTENT_EXPORT extern const char kEnableWebVR[];
+ CONTENT_EXPORT extern const char kFileUrlPathAlias[];
++CONTENT_EXPORT extern const char kFingerprint[];
++CONTENT_EXPORT extern const char kFingerprintPlatform[];
++CONTENT_EXPORT extern const char kFingerprintPlatformVersion[];
+ CONTENT_EXPORT extern const char kForceDisplayList2dCanvas[];
+ CONTENT_EXPORT extern const char kForcePresentationReceiverForTesting[];
+ CONTENT_EXPORT extern const char kForceWebRtcIPHandlingPolicy[];
+diff --git a/third_party/blink/renderer/core/frame/navigator.cc b/third_party/blink/renderer/core/frame/navigator.cc
+index 5deefc16cb..dec06e1ea9 100644
+--- a/third_party/blink/renderer/core/frame/navigator.cc
++++ b/third_party/blink/renderer/core/frame/navigator.cc
+@@ -21,6 +21,9 @@
+  *  MA 02110-1301, USA
+  */
+ 
++#include "base/command_line.h"
++#include "base/strings/string_util.h"
++#include "content/public/common/content_switches.h"
+ #include "third_party/blink/renderer/core/frame/navigator.h"
+ 
+ #include "third_party/blink/public/common/user_agent/user_agent_metadata.h"
+@@ -58,6 +61,20 @@ String Navigator::vendorSub() const {
+ }
+ 
+ String Navigator::platform() const {
++  const base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
++
++  if (command_line->HasSwitch(switches::kFingerprintPlatform)) {
++    std::string custom_platform = base::ToLowerASCII(command_line->GetSwitchValueASCII(switches::kFingerprintPlatform));
++
++    if (custom_platform == "windows") {
++      return "Win32";
++    } else if (custom_platform == "linux") {
++      return "Linux x86_64";
++    } else if (custom_platform == "macos") {
++      return "MacIntel";
++    }
++  }
++
+   // TODO(955620): Consider changing devtools overrides to only allow overriding
+   // the platform with a frozen platform to distinguish between
+   // mobile and desktop when ReduceUserAgent is enabled.
+diff --git a/third_party/blink/renderer/core/frame/navigator_ua.cc b/third_party/blink/renderer/core/frame/navigator_ua.cc
+index ff46a7fbfa..b47f611d8e 100644
+--- a/third_party/blink/renderer/core/frame/navigator_ua.cc
++++ b/third_party/blink/renderer/core/frame/navigator_ua.cc
+@@ -4,7 +4,9 @@
+ 
+ #include "third_party/blink/renderer/core/frame/navigator_ua.h"
+ 
++#include "base/command_line.h"
+ #include "base/compiler_specific.h"
++#include "content/public/common/content_switches.h"
+ #include "third_party/blink/public/common/features.h"
+ #include "third_party/blink/public/common/user_agent/user_agent_metadata.h"
+ #include "third_party/blink/renderer/core/frame/navigator_ua_data.h"
+@@ -19,6 +21,52 @@ NavigatorUAData* NavigatorUA::userAgentData() {
+     return ua_data;
+ 
+   UserAgentMetadata metadata = GetUserAgentMetadata();
++
++  std::string full_version = metadata.full_version;
++  std::string main_version = full_version.substr(0, full_version.find('.'));
++  metadata.brand_version_list.push_back(
++      {"Google Chrome", main_version}  // 插入主版本号
++  );
++  metadata.brand_full_version_list.push_back(
++      {"Google Chrome", metadata.full_version}
++  );
++
++  const base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
++  if (command_line->HasSwitch(switches::kFingerprintPlatform)) {
++      std::string platform_value = command_line->GetSwitchValueASCII(switches::kFingerprintPlatform);
++
++      // 在这里声明变量
++      std::string platform;
++      std::string platform_version;
++
++      // 设置平台名称
++      if (platform_value == "windows") {
++          platform = "Windows";
++          platform_version = "15.0.0";  // Windows默认版本
++      } else if (platform_value == "linux") {
++          platform = "Linux";
++          platform_version = "6.8.0";   // Linux默认版本
++      } else if (platform_value == "macos") {
++          platform = "macOS";
++          platform_version = "10.15.7"; // macOS默认版本
++      }
++
++      // 检查是否有自定义版本号
++      if (command_line->HasSwitch(switches::kFingerprintPlatformVersion)) {
++          std::string version_value = command_line->GetSwitchValueASCII(switches::kFingerprintPlatformVersion);
++          if (!version_value.empty()) {
++              platform_version = version_value;
++          }
++      }
++
++      // 设置平台和版本信息
++      metadata.platform = platform;
++      metadata.platform_version = platform_version;
++      if (platform_value == "macos") {
++        metadata.architecture = "arm";
++      }
++  }
++
+   ua_data->SetBrandVersionList(metadata.brand_version_list);
+   ua_data->SetMobile(metadata.mobile);
+   ua_data->SetPlatform(String::FromUTF8(metadata.platform),
+diff --git a/third_party/blink/renderer/core/loader/frame_fetch_context.cc b/third_party/blink/renderer/core/loader/frame_fetch_context.cc
+index f1c5e885a1..92a3b3e2cc 100644
+--- a/third_party/blink/renderer/core/loader/frame_fetch_context.cc
++++ b/third_party/blink/renderer/core/loader/frame_fetch_context.cc
+@@ -34,10 +34,12 @@
+ #include <memory>
+ #include <optional>
+ 
++#include "base/command_line.h"
+ #include "base/feature_list.h"
+ #include "base/memory/scoped_refptr.h"
+ #include "base/metrics/histogram_functions.h"
+ #include "base/metrics/histogram_macros.h"
++#include "content/public/common/content_switches.h"
+ #include "build/build_config.h"
+ #include "mojo/public/cpp/bindings/associated_remote.h"
+ #include "net/http/structured_headers.h"
+@@ -601,6 +603,51 @@ void FrameFetchContext::AddClientHintsIfNecessary(
+ 
+   // Only send User Agent hints if the info is available
+   if (ua) {
++    std::string full_version = ua->full_version;
++    std::string main_version = full_version.substr(0, full_version.find('.'));
++    ua->brand_version_list.push_back(
++        {"Google Chrome", main_version}  // 插入主版本号
++    );
++    ua->brand_full_version_list.push_back(
++        {"Google Chrome", ua->full_version}  // 插入完整版本号
++    );
++
++    // 获取命令行参数并设置平台信息
++    const base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
++    if (command_line->HasSwitch(switches::kFingerprintPlatform)) {
++        std::string platform_value = command_line->GetSwitchValueASCII(switches::kFingerprintPlatform);
++
++        // 设置平台名称和版本
++        std::string platform;
++        std::string platform_version;
++
++        if (platform_value == "windows") {
++            platform = "Windows";
++            platform_version = "15.0.0";  // 默认 Windows 版本
++        } else if (platform_value == "linux") {
++            platform = "Linux";
++            platform_version = "6.8.0";   // 默认 Linux 版本
++        } else if (platform_value == "macos") {
++            platform = "macOS";
++            platform_version = "10.15.7"; // 默认 macOS 版本
++        }
++
++        // 检查是否有自定义版本号
++        if (command_line->HasSwitch(switches::kFingerprintPlatformVersion)) {
++            std::string version_value = command_line->GetSwitchValueASCII(switches::kFingerprintPlatformVersion);
++            if (!version_value.empty()) {
++                platform_version = version_value;
++            }
++        }
++
++        // 设置平台和版本信息
++        ua->platform = platform;
++        ua->platform_version = platform_version;
++        if (platform_value == "macos") {
++            ua->architecture = "arm";
++        }
++    }
++
+     // ShouldSendClientHint is called to make sure UA is controlled by
+     // Permissions Policy.
+     if (ShouldSendClientHint(*policy, resource_origin, is_1p_origin,
