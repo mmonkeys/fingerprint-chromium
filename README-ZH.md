@@ -9,6 +9,7 @@
 
 | **版本**        | **源码**                                                                                   | **Windows**                                                                                   | **Linux**                                                                                   | **MacOS**     |
 |------------------|--------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------| ---------------------------------------------------------------------------------------------|
+| **Chrome 135**   | 跟随Chrome 136发布              | [安装包](https://github.com/adryfish/fingerprint-chromium/releases/download/135.0.7049.95/ungoogled-chromium_135.0.7049.95-1.1_installer_x64.exe) <br> [ZIP](https://github.com/adryfish/fingerprint-chromium/releases/download/135.0.7049.95/ungoogled-chromium_135.0.7049.95-1.1_windows_x64.zip) | [ 135.0.7049.95-1_linux.tar.xz ](https://github.com/adryfish/fingerprint-chromium/releases/download/135.0.7049.95/ungoogled-chromium_135.0.7049.95-1_linux.tar.xz) | [135.0.7049.95-1.1_macos.dmg](https://github.com/adryfish/fingerprint-chromium/releases/download/135.0.7049.95/ungoogled-chromium_135.0.7049.95-1.1_macos.dmg) |
 | **Chrome 134**   | [134.0.6998.165](https://github.com/adryfish/fingerprint-chromium/tree/134.0.6998.165)               | [安装包](https://github.com/adryfish/fingerprint-chromium/releases/download/134.0.6998.165/ungoogled-chromium_134.0.6998.165-1.1_installer_x64.exe) <br> [ZIP](https://github.com/adryfish/fingerprint-chromium/releases/download/134.0.6998.165/ungoogled-chromium_134.0.6998.165-1.1_windows_x64.zip) | [ 134.0.6998.165-1_linux.tar.xz ](https://github.com/adryfish/fingerprint-chromium/releases/download/134.0.6998.165/ungoogled-chromium_134.0.6998.165-1_linux.tar.xz) |  |
 | **Chrome 133**   | [133.0.6943.126](https://github.com/adryfish/fingerprint-chromium/tree/133.0.6943.126)               | [安装包](https://github.com/adryfish/fingerprint-chromium/releases/download/133.0.6943.126/ungoogled-chromium_133.0.6943.126-1.1_installer_x64.exe) <br> [ZIP](https://github.com/adryfish/fingerprint-chromium/releases/download/133.0.6943.126/ungoogled-chromium_133.0.6943.126-1.1_windows_x64.zip) | [ 133.0.6943.126-1_linux.tar.xz ](https://github.com/adryfish/fingerprint-chromium/releases/download/133.0.6943.126/ungoogled-chromium_133.0.6943.126-1_linux.tar.xz) |  |
 | **Chrome 132**   | [132.0.6834.159](https://github.com/adryfish/fingerprint-chromium/tree/132.0.6834.159)               | [安装包](https://github.com/adryfish/fingerprint-chromium/releases/download/132.0.6834.159/ungoogled-chromium_132.0.6834.159-1.1_installer_x64.exe) <br> [ZIP](https://github.com/adryfish/fingerprint-chromium/releases/download/132.0.6834.159/ungoogled-chromium_132.0.6834.159-1.1_windows_x64.zip) | [ 132.0.6834.159-1_linux.tar.xz ](https://github.com/adryfish/fingerprint-chromium/releases/download/132.0.6834.159/ungoogled-chromium_132.0.6834.159-1_linux.tar.xz) | [132.0.6834.110-1.1_macos.dmg](https://github.com/adryfish/fingerprint-chromium/releases/download/132.0.6834.159/ungoogled-chromium_132.0.6834.110-1.1_macos.dmg) |
@@ -17,8 +18,18 @@
 
 在 GitHub Release 页面中，您可以找到每个大版本的 Chromium 对应的编译版本，选择合适的文件进行下载。
 
-### 编译源码
-参考 [`ungoogled-chromium`](https://github.com/ungoogled-software/ungoogled-chromium/blob/master/docs/building.md) 。只需将submodule中的`ungoogled-chromium`仓库地址替换为 `fingerprint-browser`即可。
+### 从源码构建
+
+**源代码位于GitHub仓库的TAG中，而非main分支。**
+
+为了维护这个免费开源项目的完整性，我们采用了延迟发布源代码的策略：
+
+- **当前版本**：编译好的二进制文件立即向所有用户提供
+- **源代码**：每个版本的完整源代码和补丁文件将在下一个版本发布时公开（通常一个月后）
+
+这种方法有助于防止不法分子打包出售牟利，同时保持开源。
+
+一旦源代码发布，您可以参考[`ungoogled-chromium`](https://github.com/ungoogled-software/ungoogled-chromium/blob/master/docs/building.md)文档进行构建。只需将`ungoogled-chromium`子模块URL替换为`fingerprint-browser`仓库URL即可。
 
 
 ## 📢 广告
@@ -30,10 +41,9 @@
 
 🔥 **EasyChat** 是一个无需注册和登录的 Claude 官网镜像，免费提供国内直登体验，1:1 还原官网功能，为你畅享高效的 AI 助手服务！
 
-- 🆓 **免费使用**：无任何额外费用，即刻体验 Claude 的强大功能。
-- 🚀 **无需登录**：轻松访问，无需繁琐的注册流程。
-- 🌐 **国内直登**：快速直连，无需额外设置，畅享便捷。
-- 💎 **共享会员**：支持多人共享高级会员权益，解锁高阶模型与专属服务。
+- 🚀 **免注册体验**：开箱即用，完整还原官网功能，点击即可开始使用。
+- 🌐 **国内可访问**：无需科学上网，直连 Claude 官网服务。
+- 🤝 **共享会员**：以低于官网价格使用Claude会员，无需担心封号风险。
 
 🔗 **访问网站**：[https://easychat.top](https://easychat.top)
 
