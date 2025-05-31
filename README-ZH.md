@@ -9,10 +9,15 @@
 
 | **版本**        | **源码**                                                                                   | **Windows**                                                                                   | **Linux**                                                                                   | **MacOS**     |
 |------------------|--------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------| ---------------------------------------------------------------------------------------------|
-| **Chrome 135**   | 跟随Chrome 136发布              | [安装包](https://github.com/adryfish/fingerprint-chromium/releases/download/135.0.7049.95/ungoogled-chromium_135.0.7049.95-1.1_installer_x64.exe) <br> [ZIP](https://github.com/adryfish/fingerprint-chromium/releases/download/135.0.7049.95/ungoogled-chromium_135.0.7049.95-1.1_windows_x64.zip) | [ 135.0.7049.95-1_linux.tar.xz ](https://github.com/adryfish/fingerprint-chromium/releases/download/135.0.7049.95/ungoogled-chromium_135.0.7049.95-1_linux.tar.xz) | [135.0.7049.95-1.1_macos.dmg](https://github.com/adryfish/fingerprint-chromium/releases/download/135.0.7049.95/ungoogled-chromium_135.0.7049.95-1.1_macos.dmg) |
+| **Chrome 136**   | 跟随Chrome 137发布              | [安装包](https://github.com/adryfish/fingerprint-chromium/releases/download/136.0.7103.113/ungoogled-chromium_136.0.7103.113-1.1_installer_x64.exe) <br> [ZIP](https://github.com/adryfish/fingerprint-chromium/releases/download/136.0.7103.113/ungoogled-chromium_136.0.7103.113-1.1_windows_x64.zip) | [ 136.0.7103.113-1_linux.tar.xz ](https://github.com/adryfish/fingerprint-chromium/releases/download/136.0.7103.113/ungoogled-chromium_136.0.7103.113-1_linux.tar.xz) | [136.0.7103.113-1.1_macos.dmg](https://github.com/adryfish/fingerprint-chromium/releases/download/136.0.7103.113/ungoogled-chromium_136.0.7103.113-1.1_macos.dmg) |
+| **Chrome 135**   | [135.0.7049.95](https://github.com/adryfish/fingerprint-chromium/tree/135.0.7049.95)               | [安装包](https://github.com/adryfish/fingerprint-chromium/releases/download/135.0.7049.95/ungoogled-chromium_135.0.7049.95-1.1_installer_x64.exe) <br> [ZIP](https://github.com/adryfish/fingerprint-chromium/releases/download/135.0.7049.95/ungoogled-chromium_135.0.7049.95-1.1_windows_x64.zip) | [ 135.0.7049.95-1_linux.tar.xz ](https://github.com/adryfish/fingerprint-chromium/releases/download/135.0.7049.95/ungoogled-chromium_135.0.7049.95-1_linux.tar.xz) | [135.0.7049.95-1.1_macos.dmg](https://github.com/adryfish/fingerprint-chromium/releases/download/135.0.7049.95/ungoogled-chromium_135.0.7049.95-1.1_macos.dmg) |
 | **Chrome 134**   | [134.0.6998.165](https://github.com/adryfish/fingerprint-chromium/tree/134.0.6998.165)               | [安装包](https://github.com/adryfish/fingerprint-chromium/releases/download/134.0.6998.165/ungoogled-chromium_134.0.6998.165-1.1_installer_x64.exe) <br> [ZIP](https://github.com/adryfish/fingerprint-chromium/releases/download/134.0.6998.165/ungoogled-chromium_134.0.6998.165-1.1_windows_x64.zip) | [ 134.0.6998.165-1_linux.tar.xz ](https://github.com/adryfish/fingerprint-chromium/releases/download/134.0.6998.165/ungoogled-chromium_134.0.6998.165-1_linux.tar.xz) |  |
 | **Chrome 133**   | [133.0.6943.126](https://github.com/adryfish/fingerprint-chromium/tree/133.0.6943.126)               | [安装包](https://github.com/adryfish/fingerprint-chromium/releases/download/133.0.6943.126/ungoogled-chromium_133.0.6943.126-1.1_installer_x64.exe) <br> [ZIP](https://github.com/adryfish/fingerprint-chromium/releases/download/133.0.6943.126/ungoogled-chromium_133.0.6943.126-1.1_windows_x64.zip) | [ 133.0.6943.126-1_linux.tar.xz ](https://github.com/adryfish/fingerprint-chromium/releases/download/133.0.6943.126/ungoogled-chromium_133.0.6943.126-1_linux.tar.xz) |  |
 | **Chrome 132**   | [132.0.6834.159](https://github.com/adryfish/fingerprint-chromium/tree/132.0.6834.159)               | [安装包](https://github.com/adryfish/fingerprint-chromium/releases/download/132.0.6834.159/ungoogled-chromium_132.0.6834.159-1.1_installer_x64.exe) <br> [ZIP](https://github.com/adryfish/fingerprint-chromium/releases/download/132.0.6834.159/ungoogled-chromium_132.0.6834.159-1.1_windows_x64.zip) | [ 132.0.6834.159-1_linux.tar.xz ](https://github.com/adryfish/fingerprint-chromium/releases/download/132.0.6834.159/ungoogled-chromium_132.0.6834.159-1_linux.tar.xz) | [132.0.6834.110-1.1_macos.dmg](https://github.com/adryfish/fingerprint-chromium/releases/download/132.0.6834.159/ungoogled-chromium_132.0.6834.110-1.1_macos.dmg) |
+
+对于中国大陆用户，可以使用网盘下载
+
+夸克网盘链接: https://pan.quark.cn/s/9bb65af874fb
 
 ---
 
@@ -25,7 +30,7 @@
 为了维护这个免费开源项目的完整性，我们采用了延迟发布源代码的策略：
 
 - **当前版本**：编译好的二进制文件立即向所有用户提供
-- **源代码**：每个版本的完整源代码和补丁文件将在下一个版本发布时公开（通常一个月后）
+- **源代码**：补丁文件将在下一个版本发布时公开（通常一个月后）
 
 这种方法有助于防止不法分子打包出售牟利，同时保持开源。
 
@@ -43,7 +48,7 @@
 
 - 🚀 **免注册体验**：开箱即用，完整还原官网功能，点击即可开始使用。
 - 🌐 **国内可访问**：无需科学上网，直连 Claude 官网服务。
-- 🤝 **共享会员**：以低于官网价格使用Claude会员，无需担心封号风险。
+- 🤝 **共享会员**：支持使用 Claude 会员账号，无需担心封号风险。
 
 🔗 **访问网站**：[https://easychat.top](https://easychat.top)
 
@@ -56,21 +61,23 @@
 
 ### 指纹支持
 
-| **指纹特性**                          | **描述**                                                                                     | **命令行参数**                                                                 |
-|--------------------------------------|----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| **User-Agent**                       | 修改浏览器的 `User-Agent` 信息，包括 `navigator.userAgent`、`navigator.platform`、`navigator.userAgentData` 和 `Client Hints` | `--fingerprint-platform` <br>`--fingerprint-platform-version` <br>`--fingerprint-brand` <br>`--fingerprint-brand-version` |
-| **音频指纹**                         | 干扰或伪造音频指纹数据                                                                       | `--fingerprint`（启用指纹种子后生效）                                           |
-| **插件指纹**                         | 修改插件相关特征                                                                              | 133+去除，浏览器会返回固定的插件列表,伪装反而会暴露 |
-| **硬件指纹**                         | 自定义硬件参数，包括 CPU 核心数和内存大小                                                     | `--fingerprint` <br> `--fingerprint-hardware-concurrency` |
-| **GPU Report**                         | 修改GPU供应商和显卡型号(暂时只支持Linux) | `--fingerprint`（启用指纹种子后生效） |
-| **字体指纹**                         | 修改系统字体信息                                                                              | `--fingerprint`（启用指纹种子后生效）                                           |
-| **Canvas 图像数据噪声**               | 在 Canvas 图像数据中添加噪声，最多修改 10 个像素，干扰指纹生成                                | `--fingerprint`                                        |
-| **Canvas 测量文本噪声**               | 对 `Canvas::measureText()` 输出值进行比例缩放，随机因子范围为 `-0.0003%` 到 `0.0003%`，每次文档初始化时重新计算 |  `--fingerprint`                                      |
-| **ClientRects 噪声**                  | 对 `getClientRects()` 和 `getBoundingClientRect()` 输出值进行比例缩放，随机因子范围为 `-0.0003%` 到 `0.0003%`，每次文档初始化时重新计算 |  `--fingerprint`                                          |
-| **WebRTC 策略**                       | 默认禁用非代理 UDP 连接，防止通过 WebRTC 泄露真实 IP 地址                                     | `--disable-non-proxied-udp`（默认启用）                                           |
-| **语言支持**                         | 设置浏览器的语言和接受的语言                                                                  | `--lang`（设置浏览器语言）<br> `--accept-lang`（设置接受语言）                     |
-| **时区支持**                         | 设置浏览器时区                                                                              | `TZ` 环境变量（设置时区，例如 `TZ=Asia/Shanghai`）                              |
+可以使用 creepjs 和 browserleaks 来测试指纹修改效果。
 
+* **User-Agent**：修改浏览器的 `navigator.userAgent`、`navigator.platform`、`navigator.userAgentData` 和 `Client Hints` 信息。
+* **操作系统**
+* **音频指纹**
+* **插件**：133+版本去除后，浏览器会返回固定的插件列表。
+* **CPU核心数**
+* **内存**
+* **WebGL 图像**
+* **WebGL 元数据**：修改 GPU 供应商和显卡型号（暂时只支持 Linux）。
+* **字体**
+* **Canvas 图像**
+* **Canvas 文本**
+* **ClientRects**
+* **WebRTC**
+* **语言支持**
+* **时区支持**
 
 ### 自动化支持
 **优化了自动化使用场景，提供了以下特性：**
@@ -102,6 +109,8 @@
 | **`--disable-non-proxied-udp`** | 指定 WebRTC 策略，默认是禁用非代理 UDP 连接 | 建议保持默认设置 |
 | **`--lang`** | 设置浏览器的语言 | 语言代码（如 `zh-CN`） |
 | **`--accept-lang`** | 设置浏览器接受的语言 | 语言代码（如 `zh-CN,en-US`） |
+| **`--timezone`** | 设置时区 | 时区（如`Asia/Shanghai`, `UTC`） |
+| **`--proxy-server`** | 设置代理 | `http`, `socks`代理(不支持密码验证) |
 
 ### **新增的 User-Agent 自定义命令行参数**
 
@@ -121,10 +130,10 @@ Chrome 131 新增了两个用于进阶自定义 `User-Agent` 和 `User-Agent Dat
 
 以下是几个常见使用场景的命令行示例：
 
-### 基本使用（Linux 环境）
+### 基本使用
 
 ```bash
-export TZ="America/Los_Angeles" && ./chrome --fingerprint=1000 --user-data-dir=/tmp/chromium/1000
+./chrome --fingerprint=1000 --user-data-dir=/tmp/chromium/1000 --timezone="America/Los_Angeles" --proxy-server="你的代理服务器地址"
 ```
 
 ### 定制`User-Agent`
@@ -133,11 +142,22 @@ export TZ="America/Los_Angeles" && ./chrome --fingerprint=1000 --user-data-dir=/
 chrome.exe --fingerprint=2023 --fingerprint-platform=macos --fingerprint-platform-version="15.2.0" --fingerprint-brand="Edge"  --user-data-dir=%TEMP%\chromium
 ```
 
+### 指纹测试
+
+| 测试平台                                                                                            | 状态                                                      |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| [**CreepJS**](https://abrahamjuliot.github.io/creepjs/)                                            | ✔️ 51.5%。成功伪装所有操作系统预测。                         |
+| [**BrowserScan**](https://browserscan.net/)                                                        | ✔️ 100%。伪装所有地理位置和区域代理检测。                     |
+| [**BrowserLeaks**](https://browserleaks.com/)                                                      | ✔️ 支持多项指纹泄漏检测                                      |
+| **Cloudflare**                                                                                     | ✔️                                                        |
+| ‣ [Turnstile](https://nopecha.com/demo/turnstile)                                                  | ✔️                                                        |
+
+
 ## 用户交流
 
 扫码加入QQ群与其他用户交流：
 
-<img src="qq-group.png" alt="QQ群二维码" width="300">
+<img src="qqgroup.png" alt="QQ群二维码" width="300">
 
 ## Credits
 
